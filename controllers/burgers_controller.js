@@ -16,7 +16,7 @@ router.get("/", function(req, res) {
     /*hbsObject = {
        burgers: data
     };*/
-    //console.log(hbsObject);
+    console.log(hbsObject);
     res.render("index", hbsObject);
   });
 });
@@ -30,8 +30,10 @@ router.get("/api/burgers/:name", function(req, res) {
          burgerSelected = {
             burgers: data
           };
+
+          console.log(burgerSelected.burgers[0]);
           
-          hbsObject.burgers.push(burgerSelected.burgers.data);
+          hbsObject.burgers.push(burgerSelected.burgers[0]);
           
           console.log(hbsObject);
 
@@ -64,6 +66,7 @@ router.put("/api/burgers/:id", function(req, res) {
       // If no rows were changed, then the ID must not exist, so 404
       return res.status(404).end();
     } else {
+      modifyGlobalObject(req.params.id);
       res.status(200).end();
     }
   });
@@ -77,10 +80,26 @@ router.delete("/api/burgers/:id", function(req, res) {
       // If no rows were changed, then the ID must not exist, so 404
       return res.status(404).end();
     } else {
+      
       res.status(200).end();
     }
   });
 });
+
+function modifyGlobalObject(id) {
+    hbsObject.burgers.forEach(function(element) {
+        if (element.id == id) {
+            if (element.devoured == false) {
+                console.log("flipping to true");
+                element.devoured = true;
+            } else {
+                console.log("flipping to false");
+                element.devoured = false;
+            }
+        }
+    });
+
+}
 
 // Export routes for server.js to use.
 module.exports = router;
