@@ -7,6 +7,11 @@ var burger = {
       cb(res);
     });
   },
+  selectOne: function(condition, cb) {
+      orm.selectOne("burgers", condition, function(res) {
+          cb(res);
+      });
+  },
   // The variables cols and vals are arrays.
   create: function(cols, vals, cb) {
     orm.insertOne("burgers", cols, vals, function(res) {

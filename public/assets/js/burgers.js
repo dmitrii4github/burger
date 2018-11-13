@@ -21,27 +21,52 @@ $(function() {
       );
     });
   
+    // $(".create-form").on("submit", function(event) {
+    //   // Make sure to preventDefault on a submit event.
+    //   event.preventDefault();
+  
+    //   var newBurger = {
+    //     name: $("#ca").val().trim(),
+    //     sleepy: $("[name=devoured]:checked").val().trim()
+    //   };
+  
+    //   // Send the POST request.
+    //   $.ajax("/api/devoured", {
+    //     type: "POST",
+    //     data: newBurger
+    //   }).then(
+    //     function() {
+    //       console.log("created new burger");
+    //       // Reload the page to get the updated list
+    //       location.reload();
+    //     }
+    //   );
+    // });
+
     $(".create-form").on("submit", function(event) {
-      // Make sure to preventDefault on a submit event.
-      event.preventDefault();
-  
-      var newBurger = {
-        name: $("#ca").val().trim(),
-        sleepy: $("[name=devoured]:checked").val().trim()
-      };
-  
-      // Send the POST request.
-      $.ajax("/api/devoured", {
-        type: "POST",
-        data: newBurger
-      }).then(
-        function() {
-          console.log("created new burger");
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
+    
+        // var newBurger = {
+        //   name: $("#ca").val().trim()
+        // };
+
+        var name = $("#ca").val().trim();
+
+        console.log("name: " + name);
+    
+        // Send the GET request.
+        $.ajax("/api/burgers/" + name, {
+          type: "GET",
+          data: name
+        }).then(
+          function() {
+            console.log("retreive a burger");
+            // Reload the page to get the updated list
+            location.reload();
+          }
+        );
+      });
   
     $(".delete-burger").on("click", function(event) {
       var id = $(this).data("id");

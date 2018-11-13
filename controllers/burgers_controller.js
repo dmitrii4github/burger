@@ -16,6 +16,20 @@ router.get("/", function(req, res) {
   });
 });
 
+router.get("/api/burgers/:name", function(req, res) {
+    var condition = "name = " + req.params.name;
+
+    console.log("condition in router: ", condition);
+
+    burger.selectOne(condition, function(data){
+        var hbsObject = {
+            burger: data
+          };
+          console.log(hbsObject);
+          res.render("index", hbsObject);
+    });
+});
+
 router.post("/api/burgers", function(req, res) {
   burger.create([
     "name", "devoured"
