@@ -2,7 +2,8 @@ var express = require("express");
   
 var router = express.Router();
 
-var burgers = [];
+var hbsObject;
+
 
 // Import the model (burger.js) to use its database functions.
 var burger = require("../models/burger.js");
@@ -10,10 +11,10 @@ var burger = require("../models/burger.js");
 //Create all our routes and set up logic within those routes where required.
 router.get("/", function(req, res) {
   burger.all(function(data) {
-    var hbsObject = {
+    /*hbsObject = {
        burgers: data
-    };
-    console.log(hbsObject);
+    };*/
+    //console.log(hbsObject);
     res.render("index", hbsObject);
   });
 });
@@ -24,13 +25,13 @@ router.get("/api/burgers/:name", function(req, res) {
     console.log("condition in router: ", condition);
 
     burger.selectOne(condition, function(data){
-        var hbsObject = {
-            burger: data
+        hbsObject = {
+            burgers: data
           };
           console.log(hbsObject);
-          burgers.push(hbsObject);
-          console.log(burgers);
-          res.render("index", burgers);
+          //burgers.push(hbsObject);
+          //console.log(burgers);
+          res.render("index", hbsObject);
     });
 });
 
